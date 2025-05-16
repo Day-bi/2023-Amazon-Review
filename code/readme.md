@@ -1,12 +1,21 @@
 
 리뷰 수집, 전처리, 분석 코드
+
 ===============
-  
+
 **주요 파일 목록**
+**실행 순서**
+---------
+1. 리뷰 수집: 1_crawling_Bosch_(WAJ2416WIN).ipynb
+2. 데이터 전처리: 2_review_preprocessing.ipynb
+3. 토픽 모델링: 3_review_LDA.ipynb
+4. 검색 및 시각화: 4_review_search&vis.ipynb
+
+
 --------------
-**리뷰수집**
-- 아마존 Bosch WAJ2416WIN 크롤링.ipynb  
-  Amazon 리뷰 데이터를 크롤링하는 코드. Selenium과 BeautifulSoup 사용했음.
+**1 리뷰수집**
+- 1 crawling Bosch WAJ2416WIN.ipynb
+- Amazon 리뷰 데이터를 크롤링하는 코드. Selenium과 BeautifulSoup 사용했음.
 ### _Crawling Data Preprocessing_
   * 크롤링 함수
 ```python
@@ -56,7 +65,11 @@ df2 = pd.DataFrame({'Dates':dates,'Ratings':stars, "Titles":titles, "Bodys":cont
 print("소요시간 : {0}".format(round(end_time - start_time)), 2)
 ```
 
-**전처리**
+**2 전처리**
+- 2_review_preprocessing.ipynb
+- 수집된 리뷰 데이터에 대해 특수문자 제거, 불용어 제거, 표제어 처리 등의 전처리를 수행
+- 주요 결과로는 명사 추출 리스트(`NN`)와 표제어 리스트(`lemmatization`) 등
+  
 ### _Crawling Data Preprocessing_
   * 크롤링 데이터 전처리 함수
 ```python
@@ -101,8 +114,21 @@ def clean_text(texts):
         
     return corpus
 ```
-**실행 순서**
----------
 
-1. 아마존 Bosch WAJ2416WIN 크롤링 → 리뷰 데이터 수집
-2. Final_code.ipynb 실행 → 리뷰 데이터 전처리 및 분석
+**3 전처리**
+- 3_review_LDA.ipynb
+- 전처리된 데이터를 기반으로 LDA 토픽 모델링을 수행했음
+- 주요 키워드 그룹을 도출하여 고객 요구사항의 패턴을 분석했음
+- 
+  ![image](https://github.com/user-attachments/assets/22e06ce7-2831-4a01-b532-aa8d4d51de80)
+
+
+**4 시각화**
+- 4_review_search&vis.ipynb
+- 주요 키워드 기반 리뷰 검색 기능과 시각화를 구현했음
+- 특정 키워드와 관련된 리뷰 추출 및 분석 결과를 시각적으로 표현함
+
+![image](https://github.com/user-attachments/assets/b19ddf2d-7fd0-44a5-8126-d8436cdde0f3)
+
+![image](https://github.com/user-attachments/assets/6ddc85bd-16f9-4b19-8d95-a597c16386a9)
+
