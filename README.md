@@ -20,7 +20,7 @@
 |2019-11-05|5|Less noise	|Less noise	|
 |...|...|...|...|
 
-> 크롤링 코드는 `code/아마존 Bosch WAJ2416WIN 크롤링.ipynb`
+> 크롤링 코드는 `code/1_crawling_Bosch.ipynb`
 
 ---
 
