@@ -2,12 +2,12 @@
 
 ### 수집 대상
 - **웹사이트**: [Amazon.com](https://www.amazon.com)
-- **제품**: Bosch 세탁기 
+- **대상**: Bosch 세탁기 WAJ2416WIN 모델의 리뷰 (https://www.amazon.in/product-reviews/B08SR52BSM/ref=cm_cr_arp_d_paging_btm_next_2?ie=UTF8&reviewerType=all_reviews&pageNumber=1)
 - **수집 기간**: 2015년 5월 ~ 2023년 3월
+![image](https://github.com/user-attachments/assets/5ceaa9f0-f848-4527-9dd6-33b4996da562)
 
 ### 수집 방식
 - Python 기반 웹 크롤링(Selenium + BeautifulSoup) 사용
-- 내부 API, 로그인 등이 필요한 비공개 데이터는 사용하지 않았음
 - 수집 항목: 리뷰 제목, 본문, 별점, 날짜
 
 ### 예시
@@ -43,32 +43,35 @@
 - 시스템 정책상으로 인해 직접 수집 페이지 설정
    - 1페이지당 약 10개 리뷰
    - WAJ2416WIN 세탁기는 2159개
-   - 
+   - 페이지의 요소가 전부 로딩될 때까지 wait time 설정
+      
 ### _Crawling Data Preprocessing_
   * 크롤링 함수
 ```python
-driver = webdriver.Chrome()
+driver = webdriver.Chrome() # driver 실행
 
+# 저장할 리스트
 titles = [] # 타이틀
 stars = [] # 별점
 dates = [] # 날짜
 contents = [] # 컨텐츠
-    
-url1 = "write yours"
-url0 = 0 # 페이지 변경
 
-start_time = time.time()
+# 수집하고자 하는 리뷰 페이지    
+url1 = "write yours" # mine = "[https://www.amazon.in/Bosch-Inverter-Control-Automatic-WAJ2416WIN/dp/B08SR52BSM?th=1](https://www.amazon.in/product-reviews/B08SR52BSM/ref=cm_cr_arp_d_paging_btm_next_2?ie=UTF8&reviewerType=all_reviews&pageNumber=)"
+url0 = 0 # 페이지 초기값
+
+start_time = time.time() # 시간 기록
 
 for url2 in range(1, N): # N =  last review page
-    url = url1 + str(url2)
-    driver.get(url)
-    driver.implicitly_wait(10) # wait time
+    url = url1 + str(url2) # 페이지 번호 붙여서 실제 URL 생성
+    driver.get(url) # 페이지 요청
+    driver.implicitly_wait(10) # 페이지 내 요소 로딩 대기
+      # HTML 추출 
     res = driver.page_source
-    obj = bs(res,'html.parser')
-
+    obj = bs(res,'html.parser') # BeautifulSoup으로 파싱
+      # HTML 재추출
     source = driver.page_source
-    
-    bs_obj = bs(source, "html.parser")
+    bs_obj = bs(source, "html.parser") # BeautifulSoup으로 파싱
 
     for i in bs_obj.findAll('a',{'data-hook':'review-title'}): # review title
         titles.append(i.get_text().strip())
@@ -88,7 +91,8 @@ for url2 in range(1, N): # N =  last review page
 
 end_time = time.time()
 
-df2 = pd.DataFrame({'Dates':dates,'Ratings':stars, "Titles":titles, "Bodys":contents})
+# 수집된 데이터를 DataFrame으로 정리
+df = pd.DataFrame({'Dates':dates,'Ratings':stars, "Titles":titles, "Bodys":contents})
 
 print("소요시간 : {0}".format(round(end_time - start_time)), 2)
 ```
@@ -96,7 +100,7 @@ print("소요시간 : {0}".format(round(end_time - start_time)), 2)
 **2 전처리**
 - 2_review_preprocessing.ipynb
 - 수집된 리뷰 데이터에 대해 특수문자 제거, 불용어 제거, 표제어 처리 등의 전처리를 수행
-- 주요 결과로는 명사 추출 리스트(`NN`)와 표제어 리스트(`lemmatization`) 등
+- 명사 추출 리스트(`NN`)와 표제어 리스트(`lemmatization`) 등
   
 ### _Crawling Data Preprocessing_
   * 크롤링 데이터 전처리 함수
