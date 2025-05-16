@@ -10,9 +10,17 @@
 
 - processed_customer_review.csv  
   전처리 과정을 거친 데이터가 저장되어 있음 
-  
 
-- result/  
-  분석 결과로 도출된 CR, EC, IPA 결과 등이 저장되어 있음.  
-  예: cr_list.csv, ec_mapping.csv, ipa_matrix.xlsx
 
+
+| 컬럼명           | 설명 |
+|------------------|------|
+| `date`           | 리뷰가 작성된 날짜 (Excel에서는 `########`로 표시될 수 있으나 실제로는 날짜 형식임) |
+| `star`           | 별점 (1~5점 사이의 정수) |
+| `title`          | 리뷰 제목 |
+| `body`           | 리뷰 본문 내용 |
+| `clean_text`     | 본문에서 특수문자를 제거하고, 소문자로 바꾸고, 문장 단위로 분해한 텍스트 |
+| `stopwords`      | 불용어(stopwords)를 제거한 후의 단어 리스트 |
+| `pos_tag`        | 각 단어에 대해 품사 태깅을 적용한 결과 (예: `('quality', 'NN')`) |
+| `NN`             | 품사 태깅 결과에서 명사(NN)만 추출한 리스트 |
+| `lemmatization`  | 명사 리스트에 대해 표제어(Lemma)를 적용하여 정규화한 단어 리스트 |
