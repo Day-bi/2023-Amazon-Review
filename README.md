@@ -28,7 +28,6 @@
 
 - 특수문자 제거, 소문자 변환, 불용어 제거, 표제어 처리 (Lemmatization) 수행
 - 품사 태깅 및 명사만 추출하여 분석 대상 단어로 사용
-- 전처리 코드는 `code/코드 수정본.py` 또는 `Final_code.ipynb` 내 포함
 
 ### _Crawling Data Preprocessing_
   * 크롤링 함수
