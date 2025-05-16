@@ -39,7 +39,11 @@
 --------------
 **1 리뷰수집**
 - 1 crawling Bosch WAJ2416WIN.ipynb
-- Amazon 리뷰 데이터를 크롤링하는 코드. Selenium과 BeautifulSoup 사용했음.
+- Amazon 리뷰 데이터를 크롤링하는 코드. Selenium과 BeautifulSoup 사용했음
+- 시스템 정책상으로 인해 직접 수집 페이지 설정
+   - 1페이지당 약 10개 리뷰
+   - WAJ2416WIN 세탁기는 2159개
+   - 
 ### _Crawling Data Preprocessing_
   * 크롤링 함수
 ```python
@@ -55,7 +59,7 @@ url0 = 0 # 페이지 변경
 
 start_time = time.time()
 
-for url2 in range(1,31):
+for url2 in range(1, N): # N =  last review page
     url = url1 + str(url2)
     driver.get(url)
     driver.implicitly_wait(10) # wait time
